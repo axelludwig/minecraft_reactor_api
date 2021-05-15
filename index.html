@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>minecraft</title>
+</head>
+
+<body>
+    <button onclick="switchState('activate')">activer</button>
+    <button onclick="switchState('desactivate')">desactiver</button>
+    <br>
+    <br>
+    <img id="img" />
+</body>
+
+</html>
+
+<script>
+    setImage();
+    function switchState(state) {
+        fetch("http://194.147.2.105:7777/changeState?value=" + state);
+        window.location.replace("http://194.147.2.105:7777/");
+    }
+
+    function setImage() {
+        fetch("http://194.147.2.105:7777/state").then((res) => {
+            res.text().then((text) => {
+                if ("false" == text) {
+                    document.getElementById("img").src = "images/off.png"
+                    document.getElementById("img").alt = "réacteur desactivé"
+                }
+                else {
+                    document.getElementById("img").src = "images/on.png"
+                    document.getElementById("img").alt = "réacteur activé"
+                }
+            });
+        });
+    }
+</script>
