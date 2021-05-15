@@ -26,6 +26,7 @@ app.get('/changeState', (req, res) => {
     if ('activate' == req.query.value) state = true;
     else state = false;
     // res.sendFile(path.join(__dirname, 'index.html'))
+    res.send(req.query.value)
 })
 
 app.listen(port, () => {
