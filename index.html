@@ -4,37 +4,52 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="images/minecraft.png" />
 
     <title>minecraft</title>
 </head>
 
 <body>
-    <button onclick="switchState('activate')">activer</button>
-    <button onclick="switchState('desactivate')">desactiver</button>
-    <br>
-    <br>
+    <p id="energyLevel"></p>
+    <button onclick="switchState('activate')">activate</button>
+    <button onclick="switchState('desactivate')">desactive</button>
+    <br />
+    <br />
     <img id="img" />
 </body>
 
 </html>
 
 <script>
+
+    setInterval(function () {
+        getEnergyLevel();
+    }, 1000);
     setImage();
+
     function switchState(state) {
-        fetch("http://194.147.2.105:7777/changeState?value=" + state);
-        window.location.replace("http://194.147.2.105:7777/");
+        fetch("http://linkenparis.com:7777/changeState?value=" + state);
+        window.location.replace("http://linkenparis.com:7777/");
+    }
+
+    function getEnergyLevel() {
+        fetch("http://linkenparis.com:7777/getEnergyLevel").then((res) => {
+            res.text().then((text) => {
+                var energyLevel = Math.floor(text * 100 / 15);
+                document.getElementById("energyLevel").textContent = "energy level : " + energyLevel + " %"
+            })
+        });
     }
 
     function setImage() {
-        fetch("http://194.147.2.105:7777/state").then((res) => {
+        fetch("http://linkenparis.com:7777/state").then((res) => {
             res.text().then((text) => {
                 if ("false" == text) {
-                    document.getElementById("img").src = "images/off.png"
-                    document.getElementById("img").alt = "réacteur desactivé"
-                }
-                else {
-                    document.getElementById("img").src = "images/on.png"
-                    document.getElementById("img").alt = "réacteur activé"
+                    document.getElementById("img").src = "images/off.png";
+                    document.getElementById("img").alt = "réacteur desactivé";
+                } else {
+                    document.getElementById("img").src = "images/on.png";
+                    document.getElementById("img").alt = "réacteur activé";
                 }
             });
         });

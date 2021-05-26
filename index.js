@@ -5,8 +5,9 @@ var cors = require('cors')
 
 app.use(cors())
 
-const port = 7777
+const port = 7776
 var state = false;
+var energyLevel = 0;
 
 
 app.get('/', (req, res) => {
@@ -27,6 +28,15 @@ app.get('/changeState', (req, res) => {
     else state = false;
     // res.sendFile(path.join(__dirname, 'index.html'))
     res.send(req.query.value)
+})
+
+app.get('/setEnergyLevel', (req, res) => {
+    energyLevel = req.query.value;
+    res.send(energyLevel)
+})
+
+app.get('/getEnergyLevel', (req, res) => {
+    res.send(energyLevel)
 })
 
 app.listen(port, () => {
