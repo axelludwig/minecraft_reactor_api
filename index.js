@@ -5,7 +5,7 @@ var cors = require('cors')
 
 app.use(cors())
 
-const port = 7776
+const port = 7777
 var state = false;
 var energyLevel = 0;
 
